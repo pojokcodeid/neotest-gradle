@@ -41,7 +41,6 @@ local function get_test_results_directory(gradle_executable, project_directory)
 
   for _, line in pairs(output_lines) do
     if line:match('testResultsDir: ') then
-      print(line:gsub('testResultsDir: ', '') .. lib.files.sep .. 'test')
       return line:gsub('testResultsDir: ', '') .. lib.files.sep .. 'test'
     end
   end
@@ -90,6 +89,7 @@ local function get_test_filter_arguments(tree, position)
     local namespaces = get_namespaces_of_tree(tree)
 
     for _, namespace in pairs(namespaces) do
+      print(namespace.id)
       vim.list_extend(arguments, { '--tests', "'" .. namespace.id .. "'" })
     end
   end
