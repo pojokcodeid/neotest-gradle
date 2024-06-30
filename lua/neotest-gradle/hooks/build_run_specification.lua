@@ -92,7 +92,7 @@ local function get_test_filter_arguments(tree, position)
       vim.list_extend(arguments, { '--tests', "'" .. namespace.id .. "'" })
     end
   end
-
+  print(table.concat(arguments,"|"))
   return arguments
 end
 
