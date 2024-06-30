@@ -41,6 +41,7 @@ local function get_test_results_directory(gradle_executable, project_directory)
 
   for _, line in pairs(output_lines) do
     if line:match('testResultsDir: ') then
+      parint(line:gsub('testResultsDir: ', '') .. lib.files.sep .. 'test')
       return line:gsub('testResultsDir: ', '') .. lib.files.sep .. 'test'
     end
   end
