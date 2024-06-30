@@ -60,7 +60,6 @@ local function get_namespaces_of_tree(tree)
 
   for _, position in tree:iter() do
     if position.type == 'namespace' then
-      position=position:gsub("/","")
       table.insert(namespaces, position)
     end
   end
