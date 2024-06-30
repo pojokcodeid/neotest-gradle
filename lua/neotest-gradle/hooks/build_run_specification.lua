@@ -114,6 +114,6 @@ return function(arguments)
 
   local context = {}
   context.test_resuls_directory = get_test_results_directory(gradle_executable, project_directory)
-  
+  print(table.concat(command, ' '))
   return { command = table.concat(command, ' '), context = context }
 end
