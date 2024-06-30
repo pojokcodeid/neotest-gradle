@@ -60,6 +60,7 @@ local function get_namespaces_of_tree(tree)
 
   for _, position in tree:iter() do
     if position.type == 'namespace' then
+      position=position:gsub("/","")
       table.insert(namespaces, position)
     end
   end
@@ -84,13 +85,11 @@ local function get_test_filter_arguments(tree, position)
   local arguments = {}
 
   if position.type == 'test' or position.type == 'namespace' then
-    position.id=(position.id):gsub("/","")
     vim.list_extend(arguments, { '--tests', "'" .. position.id .. "'" })
   elseif position.type == 'file' then
     local namespaces = get_namespaces_of_tree(tree)
 
     for _, namespace in pairs(namespaces) do
-      position.id=(position.id):gsub("/","")
       vim.list_extend(arguments, { '--tests', "'" .. namespace.id .. "'" })
     end
   end
@@ -112,8 +111,7 @@ return function(arguments)
   local project_directory = find_project_directory(position.path)
   local gradle_executable = get_gradle_executable(project_directory)
   local command = { gradle_executable, '--project-dir', project_directory, 'test' }
-  local args = get_test_filter_arguments(arguments.tree, position)
-  vim.list_extend(command, args:gsub("/",""))
+  vim.list_extend(command, get_test_filter_arguments(arguments.tree, position))
 
   local context = {}
   context.test_resuls_directory = get_test_results_directory(gradle_executable, project_directory)
