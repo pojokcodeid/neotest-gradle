@@ -84,6 +84,7 @@ local function get_test_filter_arguments(tree, position)
   local arguments = {}
 
   if position.type == 'test' or position.type == 'namespace' then
+    print(namespace.id)
     vim.list_extend(arguments, { '--tests', "'" .. position.id .. "'" })
   elseif position.type == 'file' then
     local namespaces = get_namespaces_of_tree(tree)
