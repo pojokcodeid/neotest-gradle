@@ -110,11 +110,11 @@ return function(arguments)
   local project_directory = find_project_directory(position.path)
   local gradle_executable = get_gradle_executable(project_directory)
   local command = { gradle_executable, '--project-dir', project_directory, 'test' }
+  print(table.concat(get_test_filter_arguments(arguments.tree, position),'| '))
   vim.list_extend(command, get_test_filter_arguments(arguments.tree, position))
 
   local context = {}
   context.test_resuls_directory = get_test_results_directory(gradle_executable, project_directory)
   
-  local execmd=(table.concat(command, ' ')):gsub("/*.","*.")
-  return { command = execmd, context = context }
+  return { command = table.concat(command, ' '), context = context }
 end
